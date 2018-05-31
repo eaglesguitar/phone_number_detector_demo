@@ -16,16 +16,16 @@
 
 package com.android.grafika;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.app.Activity;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 /**
  * Show color bars.
@@ -36,7 +36,7 @@ public class ColorBarActivity extends Activity implements SurfaceHolder.Callback
     private SurfaceView mSurfaceView;
 
     private static final String[] COLOR_NAMES = {
-        "black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"
+            "black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"
     };
 
     @Override
@@ -110,12 +110,12 @@ public class ColorBarActivity extends Activity implements SurfaceHolder.Callback
                 rectPaint.setColor(color);
 
                 float sliceWidth = width / 8;
-                canvas.drawRect(sliceWidth * i, 0, sliceWidth * (i+1), height, rectPaint);
+                canvas.drawRect(sliceWidth * i, 0, sliceWidth * (i + 1), height, rectPaint);
             }
             rectPaint.setColor(0x80808080);     // ARGB 50/50 grey (non-premul)
             float sliceHeight = height / 8;
             int posn = 6;
-            canvas.drawRect(0, sliceHeight * posn, width, sliceHeight * (posn+1), rectPaint);
+            canvas.drawRect(0, sliceHeight * posn, width, sliceHeight * (posn + 1), rectPaint);
 
             // Draw the labels last so they're on top of everything.
             for (int i = 0; i < 8; i++) {
@@ -131,17 +131,17 @@ public class ColorBarActivity extends Activity implements SurfaceHolder.Callback
      * Draw white text surrounded by a 1-pixel black outline.
      */
     private static void drawOutlineText(Canvas canvas, Paint textPaint, String str,
-            float x, float y) {
+                                        float x, float y) {
         // Is there a better way to do this?
         textPaint.setColor(0xff000000);
-        canvas.drawText(str, x-1,    y,      textPaint);
-        canvas.drawText(str, x+1,    y,      textPaint);
-        canvas.drawText(str, x,      y-1,    textPaint);
-        canvas.drawText(str, x,      y+1,    textPaint);
-        canvas.drawText(str, x-0.7f, y-0.7f, textPaint);
-        canvas.drawText(str, x+0.7f, y-0.7f, textPaint);
-        canvas.drawText(str, x-0.7f, y+0.7f, textPaint);
-        canvas.drawText(str, x+0.7f, y+0.7f, textPaint);
+        canvas.drawText(str, x - 1, y, textPaint);
+        canvas.drawText(str, x + 1, y, textPaint);
+        canvas.drawText(str, x, y - 1, textPaint);
+        canvas.drawText(str, x, y + 1, textPaint);
+        canvas.drawText(str, x - 0.7f, y - 0.7f, textPaint);
+        canvas.drawText(str, x + 0.7f, y - 0.7f, textPaint);
+        canvas.drawText(str, x - 0.7f, y + 0.7f, textPaint);
+        canvas.drawText(str, x + 0.7f, y + 0.7f, textPaint);
         textPaint.setColor(0xffffffff);
         canvas.drawText(str, x, y, textPaint);
     }

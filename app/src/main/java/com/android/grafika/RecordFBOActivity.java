@@ -16,6 +16,8 @@
 
 package com.android.grafika;
 
+import android.app.Activity;
+import android.graphics.Rect;
 import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.opengl.Matrix;
@@ -32,8 +34,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.app.Activity;
-import android.graphics.Rect;
 
 import com.android.grafika.gles.Drawable2d;
 import com.android.grafika.gles.EglCore;
@@ -463,7 +463,7 @@ public class RecordFBOActivity extends Activity implements SurfaceHolder.Callbac
          * Pass in the SurfaceView's SurfaceHolder.  Note the Surface may not yet exist.
          */
         public RenderThread(SurfaceHolder holder, ActivityHandler ahandler, File outputFile,
-                long refreshPeriodNs) {
+                            long refreshPeriodNs) {
             mSurfaceHolder = holder;
             mActivityHandler = ahandler;
             mOutputFile = outputFile;
@@ -579,7 +579,7 @@ public class RecordFBOActivity extends Activity implements SurfaceHolder.Callbac
             mActivityHandler.sendGlesVersion(mEglCore.getGlVersion());
         }
 
-       /**
+        /**
          * Handles changes to the size of the underlying surface.  Adjusts viewport as needed.
          * Must be called before we start drawing.
          * (Called from RenderHandler.)
@@ -1003,7 +1003,7 @@ public class RecordFBOActivity extends Activity implements SurfaceHolder.Callbac
                 if (mFpsCountFrame == NUM_FRAMES) {
                     // compute thousands of frames per second
                     long elapsed = timeStampNanos - mFpsCountStartNanos;
-                    mActivityHandler.sendFpsUpdate((int)(NUM_FRAMES * ONE_TRILLION / elapsed),
+                    mActivityHandler.sendFpsUpdate((int) (NUM_FRAMES * ONE_TRILLION / elapsed),
                             mDroppedFrames);
 
                     // reset
@@ -1056,12 +1056,12 @@ public class RecordFBOActivity extends Activity implements SurfaceHolder.Callbac
             float yscale = mRect.getScaleY();
             xpos += mRectVelX * elapsedSeconds;
             ypos += mRectVelY * elapsedSeconds;
-            if ((mRectVelX < 0 && xpos - xscale/2 < mInnerLeft) ||
-                    (mRectVelX > 0 && xpos + xscale/2 > mInnerRight+1)) {
+            if ((mRectVelX < 0 && xpos - xscale / 2 < mInnerLeft) ||
+                    (mRectVelX > 0 && xpos + xscale / 2 > mInnerRight + 1)) {
                 mRectVelX = -mRectVelX;
             }
-            if ((mRectVelY < 0 && ypos - yscale/2 < mInnerBottom) ||
-                    (mRectVelY > 0 && ypos + yscale/2 > mInnerTop+1)) {
+            if ((mRectVelY < 0 && ypos - yscale / 2 < mInnerBottom) ||
+                    (mRectVelY > 0 && ypos + yscale / 2 > mInnerTop + 1)) {
                 mRectVelY = -mRectVelY;
             }
             mRect.setPosition(xpos, ypos);
@@ -1148,7 +1148,7 @@ public class RecordFBOActivity extends Activity implements SurfaceHolder.Callbac
          * Call from UI thread.
          */
         public void sendSurfaceChanged(@SuppressWarnings("unused") int format,
-                int width, int height) {
+                                       int width, int height) {
             // ignore format
             sendMessage(obtainMessage(RenderHandler.MSG_SURFACE_CHANGED, width, height));
         }
@@ -1210,7 +1210,7 @@ public class RecordFBOActivity extends Activity implements SurfaceHolder.Callbac
                     break;
                 case MSG_DO_FRAME:
                     long timestamp = (((long) msg.arg1) << 32) |
-                                     (((long) msg.arg2) & 0xffffffffL);
+                            (((long) msg.arg2) & 0xffffffffL);
                     renderThread.doFrame(timestamp);
                     break;
                 case MSG_RECORDING_ENABLED:
@@ -1222,7 +1222,7 @@ public class RecordFBOActivity extends Activity implements SurfaceHolder.Callbac
                 case MSG_SHUTDOWN:
                     renderThread.shutdown();
                     break;
-               default:
+                default:
                     throw new RuntimeException("unknown message " + what);
             }
         }

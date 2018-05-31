@@ -87,7 +87,7 @@ public class LiveCameraActivity extends Activity implements TextureView.SurfaceT
         if (!PermissionHelper.hasCameraPermission(this)) {
             Toast.makeText(this,
                     "Camera permission is needed to run this application", Toast.LENGTH_LONG).show();
-                PermissionHelper.launchPermissionSettings(this);
+            PermissionHelper.launchPermissionSettings(this);
             finish();
         } else {
             startPreview();
@@ -104,18 +104,18 @@ public class LiveCameraActivity extends Activity implements TextureView.SurfaceT
 
         try {
             mCamera.setPreviewTexture(mSurfaceTexture);
-            Display display = ((WindowManager)getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+            Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
 
-            if(display.getRotation() == Surface.ROTATION_0) {
+            if (display.getRotation() == Surface.ROTATION_0) {
                 mCamera.setDisplayOrientation(90);
             }
-            if(display.getRotation() == Surface.ROTATION_270) {
+            if (display.getRotation() == Surface.ROTATION_270) {
                 mCamera.setDisplayOrientation(180);
             }
             mCamera.startPreview();
         } catch (IOException ioe) {
             // Something bad happened
-            Log.e(TAG,"Exception starting preview", ioe);
+            Log.e(TAG, "Exception starting preview", ioe);
         }
     }
 }

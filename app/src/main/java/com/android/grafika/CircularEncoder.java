@@ -82,14 +82,14 @@ public class CircularEncoder {
     /**
      * Configures encoder, and prepares the input Surface.
      *
-     * @param width Width of encoded video, in pixels.  Should be a multiple of 16.
-     * @param height Height of encoded video, in pixels.  Usually a multiple of 16 (1080 is ok).
-     * @param bitRate Target bit rate, in bits.
-     * @param frameRate Expected frame rate.
+     * @param width          Width of encoded video, in pixels.  Should be a multiple of 16.
+     * @param height         Height of encoded video, in pixels.  Usually a multiple of 16 (1080 is ok).
+     * @param bitRate        Target bit rate, in bits.
+     * @param frameRate      Expected frame rate.
      * @param desiredSpanSec How many seconds of video we want to have in our buffer at any time.
      */
     public CircularEncoder(int width, int height, int bitRate, int frameRate, int desiredSpanSec,
-            Callback cb) throws IOException {
+                           Callback cb) throws IOException {
         // The goal is to size the buffer so that we can accumulate N seconds worth of video,
         // where N is passed in as "desiredSpanSec".  If the codec generates data at roughly
         // the requested bit rate, we can compute it as time * bitRate / bitsPerByte.
@@ -225,7 +225,7 @@ public class CircularEncoder {
         private volatile boolean mReady = false;
 
         public EncoderThread(MediaCodec mediaCodec, CircularEncoderBuffer encBuffer,
-                CircularEncoder.Callback callback) {
+                             CircularEncoder.Callback callback) {
             mEncoder = mediaCodec;
             mEncBuffer = encBuffer;
             mCallback = callback;

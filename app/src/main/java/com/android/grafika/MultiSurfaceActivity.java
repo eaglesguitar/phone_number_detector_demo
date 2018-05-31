@@ -16,20 +16,20 @@
 
 package com.android.grafika;
 
-import android.opengl.GLES20;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.View;
 import android.app.Activity;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
+import android.opengl.GLES20;
+import android.os.Bundle;
 import android.os.Trace;
+import android.util.Log;
+import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.View;
 
 import com.android.grafika.gles.EglCore;
 import com.android.grafika.gles.WindowSurface;
@@ -143,7 +143,8 @@ public class MultiSurfaceActivity extends Activity implements SurfaceHolder.Call
         mBouncing = false;      // tell thread to stop
         try {
             mBounceThread.join();
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException ignored) {
+        }
         mBounceThread = null;
     }
 
@@ -209,10 +210,10 @@ public class MultiSurfaceActivity extends Activity implements SurfaceHolder.Call
                 // top layer: alpha stripes
                 if (portrait) {
                     int halfLine = width / 16 + 1;
-                    drawRectSurface(surface, width/2 - halfLine, 0, halfLine*2, height);
+                    drawRectSurface(surface, width / 2 - halfLine, 0, halfLine * 2, height);
                 } else {
                     int halfLine = height / 16 + 1;
-                    drawRectSurface(surface, 0, height/2 - halfLine, width, halfLine*2);
+                    drawRectSurface(surface, 0, height / 2 - halfLine, width, halfLine * 2);
                 }
                 break;
             default:

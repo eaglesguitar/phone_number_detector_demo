@@ -14,11 +14,13 @@
      limitations under the License.
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CameraOnTextureActivity" >
+    tools:context=".CameraOnTextureActivity"
+    >
 
     <SurfaceView
         android:id="@+id/cameraOnTexture_surfaceView"
@@ -27,7 +29,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        />
 
     <TextView
         android:id="@+id/tfcCameraParams_text"
@@ -35,7 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="@string/tfcCameraParams" />
+        android:text="@string/tfcCameraParams"
+        />
 
     <TextView
         android:id="@+id/tfcRectSize_text"
@@ -43,7 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/tfcCameraParams_text"
-        android:text="@string/tfcRectSize" />
+        android:text="@string/tfcRectSize"
+        />
 
     <TextView
         android:id="@+id/tfcZoomArea_text"
@@ -51,7 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/tfcRectSize_text"
-        android:text="@string/tfcZoomArea" />
+        android:text="@string/tfcZoomArea"
+        />
 
 
     <TextView
@@ -60,14 +66,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/tfcZoom_seekbar"
-        android:text="@string/tfcZoomLabel" />
+        android:text="@string/tfcZoomLabel"
+        />
 
     <SeekBar
         android:id="@+id/tfcZoom_seekbar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/tfcRotateLabel_text"
-        android:layout_below="@+id/tfcZoomArea_text" />
+        android:layout_below="@+id/tfcZoomArea_text"
+        />
 
     <TextView
         android:id="@+id/tfcSizeLabel_text"
@@ -75,14 +83,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/tfcSize_seekbar"
-        android:text="@string/tfcSizeLabel" />
+        android:text="@string/tfcSizeLabel"
+        />
 
     <SeekBar
         android:id="@+id/tfcSize_seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/tfcRotateLabel_text"
-        android:layout_below="@+id/tfcZoom_seekbar" />
+        android:layout_below="@+id/tfcZoom_seekbar"
+        />
 
     <TextView
         android:id="@+id/tfcRotateLabel_text"
@@ -90,13 +100,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/tfcRotate_seekbar"
-        android:text="@string/tfcRotateLabel" />
+        android:text="@string/tfcRotateLabel"
+        />
 
     <SeekBar
         android:id="@+id/tfcRotate_seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/tfcRotateLabel_text"
-        android:layout_below="@+id/tfcSize_seekbar" />
+        android:layout_below="@+id/tfcSize_seekbar"
+        />
 
 </RelativeLayout>

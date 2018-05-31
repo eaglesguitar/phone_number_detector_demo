@@ -16,15 +16,15 @@
 
 package com.android.grafika;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 
 /**
  * Opens a large number of MediaCodec encoders, just to see what happens.
@@ -46,7 +46,7 @@ public class CodecOpenActivity extends Activity {
 
     /**
      * onClick handler for "start" button.
-     *
+     * <p>
      * We create as many codecs as we can and return without releasing them.  The codecs
      * will remain in use until the next GC.
      */

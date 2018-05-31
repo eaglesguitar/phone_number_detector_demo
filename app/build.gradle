@@ -13,17 +13,17 @@
  * limitations under the License.
  */
 
-apply plugin : 'com.android.application'
+apply plugin: 'com.android.application'
 
 android {
-  compileSdkVersion 26
-  defaultConfig {
-    applicationId "com.google.grafika"
-    minSdkVersion 14
-    targetSdkVersion 26
-  }
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.google.grafika"
+        minSdkVersion 14
+        targetSdkVersion 26
+    }
 }
 
 dependencies {
-  implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
 }

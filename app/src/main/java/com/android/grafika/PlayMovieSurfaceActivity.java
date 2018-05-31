@@ -16,6 +16,7 @@
 
 package com.android.grafika;
 
+import android.app.Activity;
 import android.opengl.GLES20;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,11 +25,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.app.Activity;
 
 import com.android.grafika.gles.EglCore;
 import com.android.grafika.gles.WindowSurface;
@@ -42,20 +42,20 @@ import java.io.IOException;
  * This is very similar to PlayMovieActivity, but the output goes to a SurfaceView instead of
  * a TextureView.  There are some important differences:
  * <ul>
- *   <li> TextureViews behave like normal views.  SurfaceViews don't.  A SurfaceView has
- *        a transparent "hole" in the UI through which an independent Surface layer can
- *        be seen.  This Surface is sent directly to the system graphics compositor.
- *   <li> Because the video is being composited with the UI by the system compositor,
- *        rather than the application, it can often be done more efficiently (e.g. using
- *        a hardware composer "overlay").  This can lead to significant battery savings
- *        when playing a long movie.
- *   <li> On the other hand, the TextureView contents can be freely scaled and rotated
- *        with a simple matrix.  The SurfaceView output is limited to scaling, and it's
- *        more awkward to do.
- *   <li> DRM-protected content can't be touched by the app (or even the system compositor).
- *        We have to point the MediaCodec decoder at a Surface that is composited by a
- *        hardware composer overlay.  The only way to do the app side of this is with
- *        SurfaceView.
+ * <li> TextureViews behave like normal views.  SurfaceViews don't.  A SurfaceView has
+ * a transparent "hole" in the UI through which an independent Surface layer can
+ * be seen.  This Surface is sent directly to the system graphics compositor.
+ * <li> Because the video is being composited with the UI by the system compositor,
+ * rather than the application, it can often be done more efficiently (e.g. using
+ * a hardware composer "overlay").  This can lead to significant battery savings
+ * when playing a long movie.
+ * <li> On the other hand, the TextureView contents can be freely scaled and rotated
+ * with a simple matrix.  The SurfaceView output is limited to scaling, and it's
+ * more awkward to do.
+ * <li> DRM-protected content can't be touched by the app (or even the system compositor).
+ * We have to point the MediaCodec decoder at a Surface that is composited by a
+ * hardware composer overlay.  The only way to do the app side of this is with
+ * SurfaceView.
  * </ul>
  * <p>
  * The MediaCodec decoder requests buffers from the Surface, passing the video dimensions
@@ -82,7 +82,6 @@ public class PlayMovieSurfaceActivity extends Activity implements OnItemSelected
     /**
      * Overridable  method to get layout id.  Any provided layout needs to include
      * the same views (or compatible) as active_play_movie_surface
-     *
      */
     protected int getContentViewId() {
         return R.layout.activity_play_movie_surface;
@@ -167,7 +166,9 @@ public class PlayMovieSurfaceActivity extends Activity implements OnItemSelected
         Log.d(TAG, "onItemSelected: " + mSelectedMovie + " '" + mMovieFiles[mSelectedMovie] + "'");
     }
 
-    @Override public void onNothingSelected(AdapterView<?> parent) {}
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
 
     /**
      * onClick handler for "play"/"stop" button.
@@ -197,7 +198,7 @@ public class PlayMovieSurfaceActivity extends Activity implements OnItemSelected
 
             MoviePlayer player = null;
             try {
-                 player = new MoviePlayer(
+                player = new MoviePlayer(
                         new File(getFilesDir(), mMovieFiles[mSelectedMovie]), surface, callback);
             } catch (IOException ioe) {
                 Log.e(TAG, "Unable to play movie", ioe);

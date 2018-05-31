@@ -15,28 +15,32 @@
 -->
 
 <!-- this goes inside an alert dialog -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:orientation="vertical" >
-    
-      <TextView
-          android:id="@+id/workJobName_text"
-          android:layout_width="wrap_content"
-          android:layout_height="fill_parent"
-          android:autoLink="web"
-          android:paddingLeft="4dp"
-          android:paddingRight="4dp"
-          android:text="@string/workJobName_text" />
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="50dp"
+    android:orientation="vertical"
+    >
 
-      <ProgressBar
-          android:id="@+id/work_progress"
-          style="?android:attr/progressBarStyleHorizontal"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:paddingLeft="4dp"
-          android:paddingRight="4dp" />
-      
+    <TextView
+        android:id="@+id/workJobName_text"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:autoLink="web"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:text="@string/workJobName_text"
+        />
+
+    <ProgressBar
+        android:id="@+id/work_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        />
+
 </LinearLayout>
       

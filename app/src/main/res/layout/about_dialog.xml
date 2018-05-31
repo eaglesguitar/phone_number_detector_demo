@@ -15,10 +15,12 @@
 -->
 
 <!-- this goes inside an alert dialog -->
-      <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:layout_width="wrap_content"
-          android:layout_height="fill_parent"
-          android:autoLink="web"
-          android:paddingLeft="4dp"
-          android:paddingRight="4dp"
-          android:text="@string/about_text" />
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:autoLink="web"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:text="@string/about_text"
+    />

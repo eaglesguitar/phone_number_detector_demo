@@ -84,7 +84,7 @@ public class CircularEncoderBuffer {
         if (VERBOSE) {
             Log.d(TAG, "CBE: bitRate=" + bitRate + " frameRate=" + frameRate +
                     " desiredSpan=" + desiredSpanSec + ": dataBufferSize=" + dataBufferSize +
-                " metaBufferCount=" + metaBufferCount);
+                    " metaBufferCount=" + metaBufferCount);
         }
     }
 
@@ -108,10 +108,10 @@ public class CircularEncoderBuffer {
     /**
      * Adds a new encoded data packet to the buffer.
      *
-     * @param buf The data.  Set position() to the start offset and limit() to position+size.
-     *     The position and limit may be altered by this method.
-     * @param size Number of bytes in the packet.
-     * @param flags MediaCodec.BufferInfo flags.
+     * @param buf     The data.  Set position() to the start offset and limit() to position+size.
+     *                The position and limit may be altered by this method.
+     * @param size    Number of bytes in the packet.
+     * @param flags   MediaCodec.BufferInfo flags.
      * @param ptsUsec Presentation time stamp, in microseconds.
      */
     public void add(ByteBuffer buf, int flags, long ptsUsec) {
@@ -139,7 +139,9 @@ public class CircularEncoderBuffer {
         } else {
             // two chunks
             int firstSize = dataLen - packetStart;
-            if (VERBOSE) { Log.v(TAG, "split, firstsize=" + firstSize + " size=" + size); }
+            if (VERBOSE) {
+                Log.v(TAG, "split, firstsize=" + firstSize + " size=" + size);
+            }
             buf.get(mDataBuffer, packetStart, firstSize);
             buf.get(mDataBuffer, 0, size - firstSize);
         }
@@ -262,7 +264,7 @@ public class CircularEncoderBuffer {
         int nextHead = (mMetaHead + 1) % metaLen;
         if (nextHead == mMetaTail) {
             if (VERBOSE) {
-                Log.v(TAG, "ran out of metadata (head=" + mMetaHead + " tail=" + mMetaTail +")");
+                Log.v(TAG, "ran out of metadata (head=" + mMetaHead + " tail=" + mMetaTail + ")");
             }
             return false;
         }
@@ -275,7 +277,7 @@ public class CircularEncoderBuffer {
         if (size > freeSpace) {
             if (VERBOSE) {
                 Log.v(TAG, "ran out of data (tailStart=" + tailStart + " headStart=" + headStart +
-                    " req=" + size + " free=" + freeSpace + ")");
+                        " req=" + size + " free=" + freeSpace + ")");
             }
             return false;
         }

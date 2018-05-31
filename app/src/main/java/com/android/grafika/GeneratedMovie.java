@@ -70,7 +70,7 @@ public abstract class GeneratedMovie implements Content {
      * Prepares the video encoder, muxer, and an EGL input surface.
      */
     protected void prepareEncoder(String mimeType, int width, int height, int bitRate,
-            int framesPerSecond, File outputFile) throws IOException {
+                                  int framesPerSecond, File outputFile) throws IOException {
         mBufferInfo = new MediaCodec.BufferInfo();
 
         MediaFormat format = MediaFormat.createVideoFormat(mimeType, width, height);

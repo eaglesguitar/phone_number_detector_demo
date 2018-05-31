@@ -14,7 +14,8 @@
      limitations under the License.
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,7 +23,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".PlayMovieSurfaceActivity" >
+    tools:context=".PlayMovieSurfaceActivity"
+    >
 
     <Button
         android:id="@+id/play_stop_button"
@@ -31,14 +33,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:text="@string/play_button_text"
-        android:onClick="clickPlayStop" />
+        android:onClick="clickPlayStop"
+        />
 
     <Spinner
         android:id="@+id/playMovieFile_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/play_stop_button"
-        android:layout_toRightOf="@id/play_stop_button" />
+        android:layout_toRightOf="@id/play_stop_button"
+        />
 
     <Button
         android:id="@+id/screen_record_button"
@@ -49,20 +53,23 @@
         android:text="@string/toggleRecordingOn"
         android:layout_toEndOf="@id/playMovieFile_spinner"
         android:layout_toRightOf="@id/playMovieFile_spinner"
-        android:onClick="clickPlayStop" />
+        android:onClick="clickPlayStop"
+        />
 
     <com.android.grafika.AspectFrameLayout
         android:id="@+id/playMovie_afl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/play_stop_button"
-        android:layout_centerInParent="true" >
+        android:layout_centerInParent="true"
+        >
 
         <SurfaceView
             android:id="@+id/playMovie_surface"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            />
 
     </com.android.grafika.AspectFrameLayout>
 

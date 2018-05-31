@@ -16,6 +16,7 @@
 
 package com.android.grafika;
 
+import android.app.Activity;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.opengl.GLES20;
@@ -31,7 +32,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.app.Activity;
 
 import com.android.grafika.gles.Drawable2d;
 import com.android.grafika.gles.EglCore;
@@ -70,9 +70,9 @@ import java.lang.ref.WeakReference;
  * <li> The user updates a slider.
  * <li> The new value is passed as a percent to the render thread.
  * <li> The render thread converts the percent to something concrete (e.g. size in pixels).
- *      The rect geometry is updated.
+ * The rect geometry is updated.
  * <li> (For most things) The values computed by the render thread are sent back to the main
- *      UI thread.
+ * UI thread.
  * <li> (For most things) The UI thread updates some text views.
  * </ol>
  */
@@ -274,9 +274,13 @@ public class TextureFromCameraActivity extends Activity implements SurfaceHolder
     }
 
     @Override   // SeekBar.OnSeekBarChangeListener
-    public void onStartTrackingTouch(SeekBar seekBar) {}
+    public void onStartTrackingTouch(SeekBar seekBar) {
+    }
+
     @Override   // SeekBar.OnSeekBarChangeListener
-    public void onStopTrackingTouch(SeekBar seekBar) {}
+    public void onStopTrackingTouch(SeekBar seekBar) {
+    }
+
     @Override
 
     /**
@@ -846,7 +850,7 @@ public class TextureFromCameraActivity extends Activity implements SurfaceHolder
          * Call from UI thread.
          */
         public void sendSurfaceChanged(@SuppressWarnings("unused") int format, int width,
-                int height) {
+                                       int height) {
             // ignore format
             sendMessage(obtainMessage(MSG_SURFACE_CHANGED, width, height));
         }
@@ -965,7 +969,7 @@ public class TextureFromCameraActivity extends Activity implements SurfaceHolder
                 case MSG_REDRAW:
                     renderThread.draw();
                     break;
-               default:
+                default:
                     throw new RuntimeException("unknown message " + what);
             }
         }

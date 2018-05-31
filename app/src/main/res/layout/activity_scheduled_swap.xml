@@ -14,7 +14,8 @@
      limitations under the License.
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,14 +23,16 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ScheduledSwapActivity" >
+    tools:context=".ScheduledSwapActivity"
+    >
 
     <SurfaceView
         android:id="@+id/scheduledSwap_surfaceView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        />
 
     <TextView
         android:id="@+id/scheduledSwapUpdateLabel_text"
@@ -37,14 +40,16 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/scheduledSwap_surfaceView"
         android:layout_alignBaseline="@+id/scheduledSwapUpdate_spinner"
-        android:text="@string/scheduledSwapUpdateLabel" />
+        android:text="@string/scheduledSwapUpdateLabel"
+        />
 
     <Spinner
         android:id="@+id/scheduledSwapUpdate_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/scheduledSwap_surfaceView"
-        android:layout_toRightOf="@+id/scheduledSwapUpdateLabel_text" />
+        android:layout_toRightOf="@+id/scheduledSwapUpdateLabel_text"
+        />
 
     <TextView
         android:id="@+id/scheduledSwapAheadLabel_text"
@@ -52,27 +57,31 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/scheduledSwap_surfaceView"
         android:layout_alignBaseline="@+id/scheduledSwapAhead_spinner"
-        android:text="@string/scheduledSwapAheadLabel" />
+        android:text="@string/scheduledSwapAheadLabel"
+        />
 
     <Spinner
         android:id="@+id/scheduledSwapAhead_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/scheduledSwapUpdate_spinner"
-        android:layout_toRightOf="@+id/scheduledSwapAheadLabel_text" />
+        android:layout_toRightOf="@+id/scheduledSwapAheadLabel_text"
+        />
 
     <TextView
         android:id="@+id/scheduledSwapRefresh_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/scheduledSwap_surfaceView"
-        android:layout_below="@+id/scheduledSwapAhead_spinner" />
+        android:layout_below="@+id/scheduledSwapAhead_spinner"
+        />
 
     <TextView
         android:id="@+id/scheduledSwapStatus_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/scheduledSwap_surfaceView"
-        android:layout_below="@+id/scheduledSwapRefresh_text" />
+        android:layout_below="@+id/scheduledSwapRefresh_text"
+        />
 
 </RelativeLayout>

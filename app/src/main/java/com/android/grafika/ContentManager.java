@@ -46,7 +46,7 @@ public class ContentManager {
     public static final int MOVIE_EIGHT_RECTS = 0;
     public static final int MOVIE_SLIDERS = 1;
 
-    private static final int[] ALL_TAGS = new int[] {
+    private static final int[] ALL_TAGS = new int[]{
             MOVIE_EIGHT_RECTS,
             MOVIE_SLIDERS
     };
@@ -71,7 +71,8 @@ public class ContentManager {
         }
     }
 
-    private ContentManager() {}
+    private ContentManager() {
+    }
 
     public static void initialize(Context context) {
         ContentManager mgr = getInstance();
@@ -192,6 +193,7 @@ public class ContentManager {
     public interface ProgressUpdater {
         /**
          * Updates a progress meter.
+         *
          * @param percent Percent completed (0-100).
          */
         void updateProgress(int percent);

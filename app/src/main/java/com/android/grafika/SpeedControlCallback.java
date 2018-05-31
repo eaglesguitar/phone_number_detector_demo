@@ -118,13 +118,14 @@ public class SpeedControlCallback implements MoviePlayer.FrameCallback {
                         long startNsec = System.nanoTime();
                         Thread.sleep(sleepTimeUsec / 1000, (int) (sleepTimeUsec % 1000) * 1000);
                         long actualSleepNsec = System.nanoTime() - startNsec;
-                        Log.d(TAG, "sleep=" + sleepTimeUsec + " actual=" + (actualSleepNsec/1000) +
+                        Log.d(TAG, "sleep=" + sleepTimeUsec + " actual=" + (actualSleepNsec / 1000) +
                                 " diff=" + (Math.abs(actualSleepNsec / 1000 - sleepTimeUsec)) +
                                 " (usec)");
                     } else {
                         Thread.sleep(sleepTimeUsec / 1000, (int) (sleepTimeUsec % 1000) * 1000);
                     }
-                } catch (InterruptedException ie) {}
+                } catch (InterruptedException ie) {
+                }
                 nowUsec = System.nanoTime() / 1000;
             }
 
@@ -136,7 +137,9 @@ public class SpeedControlCallback implements MoviePlayer.FrameCallback {
     }
 
     // runs on decode thread
-    @Override public void postRender() {}
+    @Override
+    public void postRender() {
+    }
 
     @Override
     public void loopReset() {

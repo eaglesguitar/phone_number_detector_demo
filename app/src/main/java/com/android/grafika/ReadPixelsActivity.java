@@ -16,6 +16,10 @@
 
 package com.android.grafika;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.opengl.GLES20;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,10 +29,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.res.Resources;
 
 import com.android.grafika.gles.EglCore;
 import com.android.grafika.gles.OffscreenSurface;
@@ -77,12 +77,12 @@ public class ReadPixelsActivity extends Activity {
         builder.setCancelable(false);   // only by button
         builder.setNegativeButton(R.string.cancel,
                 new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mIsCanceled = true;
-                // let the async task handle dismiss the dialog
-            }
-        });
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mIsCanceled = true;
+                        // let the async task handle dismiss the dialog
+                    }
+                });
         return builder.show();
 
     }
@@ -118,7 +118,7 @@ public class ReadPixelsActivity extends Activity {
          * Prepare for the glReadPixels test.
          */
         public ReadPixelsTask(AlertDialog dialog, int resultTextId,
-                int width, int height, int iterations) {
+                              int width, int height, int iterations) {
             mDialog = dialog;
             mResultTextId = resultTextId;
             mWidth = width;

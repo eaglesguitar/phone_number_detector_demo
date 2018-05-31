@@ -16,6 +16,8 @@
 
 package com.android.grafika;
 
+import android.app.Activity;
+import android.graphics.Rect;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
@@ -31,8 +33,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.app.Activity;
-import android.graphics.Rect;
 
 import com.android.grafika.gles.Drawable2d;
 import com.android.grafika.gles.EglCore;
@@ -75,9 +75,9 @@ public class HardwareScalerActivity extends Activity implements SurfaceHolder.Ca
     private static final int SURFACE_SIZE_MEDIUM = 2;
     private static final int SURFACE_SIZE_FULL = 3;
 
-    private static final int[] SURFACE_DIM = new int[] { 64, 240, 480, -1 };
-    private static final String[] SURFACE_LABEL = new String[] {
-        "tiny", "small", "medium", "full"
+    private static final int[] SURFACE_DIM = new int[]{64, 240, 480, -1};
+    private static final String[] SURFACE_LABEL = new String[]{
+            "tiny", "small", "medium", "full"
     };
 
     private int mSelectedSize;
@@ -595,7 +595,7 @@ public class HardwareScalerActivity extends Activity implements SurfaceHolder.Ca
 
         /**
          * Advances animation state.
-         *
+         * <p>
          * We use the time delta from the previous event to determine how far everything
          * moves.  Ideally this will yield identical animation sequences regardless of
          * the device's actual refresh rate.
@@ -638,12 +638,12 @@ public class HardwareScalerActivity extends Activity implements SurfaceHolder.Ca
             float yscale = mRect.getScaleY();
             xpos += mRectVelX * elapsedSeconds;
             ypos += mRectVelY * elapsedSeconds;
-            if ((mRectVelX < 0 && xpos - xscale/2 < mInnerLeft) ||
-                    (mRectVelX > 0 && xpos + xscale/2 > mInnerRight+1)) {
+            if ((mRectVelX < 0 && xpos - xscale / 2 < mInnerLeft) ||
+                    (mRectVelX > 0 && xpos + xscale / 2 > mInnerRight + 1)) {
                 mRectVelX = -mRectVelX;
             }
-            if ((mRectVelY < 0 && ypos - yscale/2 < mInnerBottom) ||
-                    (mRectVelY > 0 && ypos + yscale/2 > mInnerTop+1)) {
+            if ((mRectVelY < 0 && ypos - yscale / 2 < mInnerBottom) ||
+                    (mRectVelY > 0 && ypos + yscale / 2 > mInnerTop + 1)) {
                 mRectVelY = -mRectVelY;
             }
             mRect.setPosition(xpos, ypos);
@@ -720,7 +720,7 @@ public class HardwareScalerActivity extends Activity implements SurfaceHolder.Ca
          * Call from UI thread.
          */
         public void sendSurfaceChanged(@SuppressWarnings("unused") int format, int width,
-                int height) {
+                                       int height) {
             // ignore format
             sendMessage(obtainMessage(MSG_SURFACE_CHANGED, width, height));
         }
@@ -740,7 +740,7 @@ public class HardwareScalerActivity extends Activity implements SurfaceHolder.Ca
          */
         public void sendSetFlatShading(boolean useFlatShading) {
             // ignore format
-            sendMessage(obtainMessage(MSG_FLAT_SHADING, useFlatShading ? 1:0, 0));
+            sendMessage(obtainMessage(MSG_FLAT_SHADING, useFlatShading ? 1 : 0, 0));
         }
 
         /**
@@ -772,7 +772,7 @@ public class HardwareScalerActivity extends Activity implements SurfaceHolder.Ca
                     break;
                 case MSG_DO_FRAME:
                     long timestamp = (((long) msg.arg1) << 32) |
-                                     (((long) msg.arg2) & 0xffffffffL);
+                            (((long) msg.arg2) & 0xffffffffL);
                     renderThread.doFrame(timestamp);
                     break;
                 case MSG_FLAT_SHADING:
@@ -781,7 +781,7 @@ public class HardwareScalerActivity extends Activity implements SurfaceHolder.Ca
                 case MSG_SHUTDOWN:
                     renderThread.shutdown();
                     break;
-               default:
+                default:
                     throw new RuntimeException("unknown message " + what);
             }
         }

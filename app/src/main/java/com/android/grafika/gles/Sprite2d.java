@@ -17,7 +17,6 @@
 package com.android.grafika.gles;
 
 import android.opengl.Matrix;
-import android.util.Log;
 
 /**
  * Base class for a 2d object.  Includes position, scale, rotation, and flat-shaded color.

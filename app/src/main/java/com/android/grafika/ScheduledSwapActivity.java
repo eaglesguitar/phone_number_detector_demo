@@ -16,13 +16,13 @@
 
 package com.android.grafika;
 
+import android.app.Activity;
 import android.opengl.GLES20;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Trace;
-import android.app.Activity;
 import android.util.Log;
 import android.view.Choreographer;
 import android.view.Surface;
@@ -30,10 +30,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.android.grafika.gles.EglCore;
 import com.android.grafika.gles.GlUtil;
@@ -74,13 +74,13 @@ public class ScheduledSwapActivity extends Activity implements OnItemSelectedLis
      * 2x12=24, 5x12=60.
      */
     private static final String[] UPDATE_PATTERNS = {   // sync with scheduledSwapUpdateNames
-        "4",        // 15 fps
-        "32",       // 24 fps
-        "32322",    // 25 fps
-        "2",        // 30 fps
-        "2111",     // 48 fps
-        "1",        // 60 fps
-        "15"        // erratic, useful for examination with systrace
+            "4",        // 15 fps
+            "32",       // 24 fps
+            "32322",    // 25 fps
+            "2",        // 30 fps
+            "2111",     // 48 fps
+            "1",        // 60 fps
+            "15"        // erratic, useful for examination with systrace
     };
 
     /**
@@ -102,7 +102,7 @@ public class ScheduledSwapActivity extends Activity implements OnItemSelectedLis
      * handle that in the app.)
      */
     private static final int[] FRAME_AHEAD = {  // sync with scheduledSwapAheadNames
-        0, 1, 2, 3
+            0, 1, 2, 3
     };
 
     // Rendering code runs on this thread.  The thread's life span is tied to the Surface.
@@ -273,7 +273,9 @@ public class ScheduledSwapActivity extends Activity implements OnItemSelectedLis
         }
     }
 
-    @Override public void onNothingSelected(AdapterView<?> parent) {}
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
 
     /**
      * Updates UI elements.
@@ -631,10 +633,11 @@ public class ScheduledSwapActivity extends Activity implements OnItemSelectedLis
 
             if (complain) {
                 mActivity.runOnUiThread(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
                         mActivity.updateControls(mDroppedFrames + mChoreographerSkips);
                     }
-                 });
+                });
             }
 
             return draw;
@@ -700,7 +703,7 @@ public class ScheduledSwapActivity extends Activity implements OnItemSelectedLis
          * Call from UI thread.
          */
         public void sendSurfaceChanged(@SuppressWarnings("unused") int format,
-                int width, int height) {
+                                       int width, int height) {
             // ignore format
             sendMessage(obtainMessage(RenderHandler.MSG_SURFACE_CHANGED, width, height));
         }
@@ -754,7 +757,7 @@ public class ScheduledSwapActivity extends Activity implements OnItemSelectedLis
                     break;
                 case MSG_DO_FRAME:
                     long timestamp = (((long) msg.arg1) << 32) |
-                                     (((long) msg.arg2) & 0xffffffffL);
+                            (((long) msg.arg2) & 0xffffffffL);
                     renderThread.doFrame(timestamp);
                     break;
                 case MSG_SET_PARAMETERS:
@@ -763,7 +766,7 @@ public class ScheduledSwapActivity extends Activity implements OnItemSelectedLis
                 case MSG_SHUTDOWN:
                     renderThread.shutdown();
                     break;
-               default:
+                default:
                     throw new RuntimeException("unknown message " + what);
             }
         }

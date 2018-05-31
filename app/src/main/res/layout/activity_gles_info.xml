@@ -14,7 +14,8 @@
      limitations under the License.
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,7 +23,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".GlesInfoActivity" >
+    tools:context=".GlesInfoActivity"
+    >
 
     <Button
         android:id="@+id/glesInfoSave_button"
@@ -30,17 +32,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:onClick="clickSave" 
-        android:text="@string/save" />
-    
+        android:onClick="clickSave"
+        android:text="@string/save"
+        />
+
     <TextView
         android:id="@+id/glesInfoFile_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/glesInfoSave_button"
         android:layout_alignBottom="@+id/glesInfoSave_button"
-        android:layout_toRightOf="@+id/glesInfoSave_button" />
-    
+        android:layout_toRightOf="@+id/glesInfoSave_button"
+        />
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -48,11 +52,13 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/glesInfoSave_button"
         android:scrollbars="vertical"
-        android:fadeScrollbars="false" >
+        android:fadeScrollbars="false"
+        >
 
         <TextView
             android:id="@+id/glesInfo_text"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            />
     </ScrollView>
 </RelativeLayout>

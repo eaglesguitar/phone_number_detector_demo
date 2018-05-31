@@ -15,7 +15,8 @@
      limitations under the License.
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,22 +24,26 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MultiSurfaceActivity" >
+    tools:context=".MultiSurfaceActivity"
+    >
 
     <SurfaceView
         android:id="@+id/multiSurfaceView1"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        />
 
     <SurfaceView
         android:id="@+id/multiSurfaceView2"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        />
 
     <SurfaceView
         android:id="@+id/multiSurfaceView3"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        />
 
     <Button
         android:id="@+id/multiSurfaceBounce_button"
@@ -47,7 +52,8 @@
         android:layout_alignLeft="@id/multiSurfaceView1"
         android:layout_alignTop="@id/multiSurfaceView1"
         android:onClick="clickBounce"
-        android:text="@string/bounce" />
+        android:text="@string/bounce"
+        />
 
     <TextView
         android:id="@+id/multiSurfaceMessage_text"
@@ -57,6 +63,7 @@
         android:layout_centerVertical="true"
         android:text="@string/multiSurfaceMessage"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#0f0" />
+        android:textColor="#0f0"
+        />
 
 </RelativeLayout>

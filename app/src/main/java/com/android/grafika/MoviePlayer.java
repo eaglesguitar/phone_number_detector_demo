@@ -70,6 +70,7 @@ public class MoviePlayer {
     public interface FrameCallback {
         /**
          * Called immediately before the frame is rendered.
+         *
          * @param presentationTimeUsec The desired presentation time, in microseconds.
          */
         void preRender(long presentationTimeUsec);
@@ -92,7 +93,7 @@ public class MoviePlayer {
     /**
      * Constructs a MoviePlayer.
      *
-     * @param sourceFile The video file to open.
+     * @param sourceFile    The video file to open.
      * @param outputSurface The Surface where frames will be sent.
      * @param frameCallback Callback object, used to pace output.
      * @throws IOException
@@ -236,7 +237,7 @@ public class MoviePlayer {
      * Work loop.  We execute here until we run out of video or are told to stop.
      */
     private void doExtract(MediaExtractor extractor, int trackIndex, MediaCodec decoder,
-            FrameCallback frameCallback) {
+                           FrameCallback frameCallback) {
         // We need to strike a balance between providing input and reading output that
         // operates efficiently without delays on the output side.
         //
@@ -366,7 +367,7 @@ public class MoviePlayer {
                         // Log the delay from the first buffer of input to the first buffer
                         // of output.
                         long nowNsec = System.nanoTime();
-                        Log.d(TAG, "startup lag " + ((nowNsec-firstInputTimeNsec) / 1000000.0) + " ms");
+                        Log.d(TAG, "startup lag " + ((nowNsec - firstInputTimeNsec) / 1000000.0) + " ms");
                         firstInputTimeNsec = 0;
                     }
                     boolean doLoop = false;
@@ -428,7 +429,7 @@ public class MoviePlayer {
         /**
          * Prepares new PlayTask.
          *
-         * @param player The player object, configured with control and output.
+         * @param player   The player object, configured with control and output.
          * @param feedback UI feedback object.
          */
         public PlayTask(MoviePlayer player, PlayerFeedback feedback) {

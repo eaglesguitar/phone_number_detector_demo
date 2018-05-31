@@ -28,7 +28,8 @@ import android.view.View;
 public class WorkDialog {
     private static final String TAG = MainActivity.TAG;
 
-    private WorkDialog() {}     // nah
+    private WorkDialog() {
+    }     // nah
 
     /**
      * Prepares an alert dialog builder, using the work_dialog view.
@@ -49,5 +50,5 @@ public class WorkDialog {
         builder.setTitle(title);
         builder.setView(view);
         return builder;
-   }
+    }
 }
