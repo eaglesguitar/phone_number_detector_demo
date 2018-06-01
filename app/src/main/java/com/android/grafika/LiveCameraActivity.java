@@ -18,6 +18,7 @@ package com.android.grafika;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -50,7 +51,7 @@ public class LiveCameraActivity extends Activity implements TextureView.SurfaceT
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_camera);
-        mTextureView = findViewById(R.id.TextureView);
+        mTextureView = findViewById(R.id.live_camera_TextureView);
         mTextureView.setSurfaceTextureListener(this);
     }
 
@@ -79,9 +80,8 @@ public class LiveCameraActivity extends Activity implements TextureView.SurfaceT
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
         // Invoked every time there's a new Camera preview frame
-        //Log.d(TAG, "updated, ts=" + surface.getTimestamp());
+//        Log.d(TAG, "updated, ts=" + surface.getTimestamp());
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -111,6 +111,7 @@ public class LiveCameraActivity extends Activity implements TextureView.SurfaceT
         mCamera.setDisplayOrientation(result);
 
         // choose preview size
+        final Camera.Size oriPreviewSize = mCamera.getParameters().getPreviewSize();
         final int[] size = updateCameraParametersSize(mCamera, cameraId == Camera.CameraInfo.CAMERA_FACING_FRONT);
         if (size != null) {
             Runnable action = new Runnable() {
@@ -121,10 +122,22 @@ public class LiveCameraActivity extends Activity implements TextureView.SurfaceT
                     float viewRatio = ((float) mTextureView.getWidth()) / mTextureView.getHeight();
                     if (ratio > viewRatio) {
                         lp.height = (int) (mTextureView.getWidth() / ratio);
+                        lp.width = mTextureView.getWidth();
                     } else {
                         lp.width = (int) (mTextureView.getHeight() * ratio);
+                        lp.height = mTextureView.getHeight();
                     }
                     mTextureView.setLayoutParams(lp);
+                    findViewById(R.id.live_camera_root_layout).requestLayout();
+
+                    mMatrix = mTextureView.getTransform(mMatrix);
+                    float scaleX = 1f, scaleY = 1f;
+                    scaleX = lp.width / ((float) oriPreviewSize.height);
+                    scaleY = lp.height / ((float) oriPreviewSize.width);
+                    mMatrix.setScale(scaleX, scaleY, oriPreviewSize.height / 2, oriPreviewSize.width / 2);
+                    mTextureView.setTransform(mMatrix);
+
+//                    setTransformMatrix(size[1], size[0], lp.width, lp.height);
                 }
             };
             if (mTextureView.getWidth() <= 0) {
@@ -197,14 +210,23 @@ public class LiveCameraActivity extends Activity implements TextureView.SurfaceT
         //Camera.Size[] optimalSizes = getOptimalSizes();
         //Camera.Size optimalPreviewSize = optimalSizes[0];
         List<Camera.Size> sizes = mParameters.getSupportedPreviewSizes();
-        // 首先从大到小排序
+
         Collections.sort(sizes, new Comparator<Camera.Size>() {
             @Override
             public int compare(Camera.Size s1, Camera.Size s2) {
-                return s2.width - s1.width;
+                return s1.width - s2.width;
             }
         });
-        Camera.Size optPreviewSize = sizes.get(sizes.size() - 1);
+        Camera.Size optPreviewSize = null;
+        for (Camera.Size size : sizes) {
+            if (size.width > 720 || size.height > 720) {
+                optPreviewSize = size;
+                break;
+            }
+        }
+        if (optPreviewSize == null) {
+            optPreviewSize = sizes.get(sizes.size() - 1);
+        }
         final int optPreviewLongSide = Math.max(optPreviewSize.width, optPreviewSize.height);
         final int optPreviewShortSide = Math.min(optPreviewSize.width, optPreviewSize.height);
         Camera.Size oriPreviewSize = mParameters.getPreviewSize();
@@ -212,26 +234,17 @@ public class LiveCameraActivity extends Activity implements TextureView.SurfaceT
             mParameters.setPreviewSize(optPreviewLongSide, optPreviewShortSide);
         }
         return new int[]{optPreviewLongSide, optPreviewShortSide};
-//        float previewRatio = 0;
-//        if (optPreviewSize != null) {
-//
-//            if (optPreviewLongSide != 0 && optPreviewShortSide != 0) {
-//                previewRatio = (float) optPreviewShortSide / (float) optPreviewLongSide;
-//            }
-//        }
-//        List<Camera.Size> supportedPictureSizes = mParameters.getSupportedPictureSizes();
-//        Camera.Size optPictureSize = getOptimalPictureSize(supportedPictureSizes,
-//                0.75f,
-//                front);
-//        if (optPictureSize != null) {
-//            int optPictureWidth = Math.max(optPictureSize.width, optPictureSize.height);
-//            int optPictureHeight = Math.min(optPictureSize.width, optPictureSize.height);
-//            Camera.Size originPictureSize = mParameters.getPictureSize();
-//            if (!optPictureSize.equals(originPictureSize)) {
-//                mParameters.setPictureSize(optPictureWidth, optPictureHeight);
-//            }
-//            double pictureRatio = (double) optPictureHeight / optPictureWidth;
-//        }
+    }
+
+    private Matrix mMatrix;
+
+    private void setTransformMatrix(float width, float height, float viewWidth, float viewHeight) {
+        mMatrix = mTextureView.getTransform(mMatrix);
+        float scaleX = 1f, scaleY = 1f;
+        scaleX = viewWidth / width;
+        scaleY = viewHeight / height;
+        mMatrix.setScale(scaleX, scaleY, width / 2, height / 2);
+        mTextureView.setTransform(mMatrix);
     }
 
     public static int getScreenWidth(Context context) {
