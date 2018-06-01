@@ -18,18 +18,25 @@ package com.android.grafika;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
+import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
@@ -113,38 +120,36 @@ public class LiveCameraActivity extends Activity implements TextureView.SurfaceT
         // choose preview size
         final Camera.Size oriPreviewSize = mCamera.getParameters().getPreviewSize();
         final int[] size = updateCameraParametersSize(mCamera, cameraId == Camera.CameraInfo.CAMERA_FACING_FRONT);
-        if (size != null) {
-            Runnable action = new Runnable() {
-                @Override
-                public void run() {
-                    ViewGroup.LayoutParams lp = mTextureView.getLayoutParams();
-                    float ratio = ((float) size[1]) / size[0];
-                    float viewRatio = ((float) mTextureView.getWidth()) / mTextureView.getHeight();
-                    if (ratio > viewRatio) {
-                        lp.height = (int) (mTextureView.getWidth() / ratio);
-                        lp.width = mTextureView.getWidth();
-                    } else {
-                        lp.width = (int) (mTextureView.getHeight() * ratio);
-                        lp.height = mTextureView.getHeight();
-                    }
-                    mTextureView.setLayoutParams(lp);
-                    findViewById(R.id.live_camera_root_layout).requestLayout();
+        Runnable action = new Runnable() {
+            @Override
+            public void run() {
+                ViewGroup.LayoutParams lp = mTextureView.getLayoutParams();
+                float ratio = ((float) size[1]) / size[0];
+                float viewRatio = ((float) mTextureView.getWidth()) / mTextureView.getHeight();
+                if (ratio > viewRatio) {
+                    lp.height = (int) (mTextureView.getWidth() / ratio);
+                    lp.width = mTextureView.getWidth();
+                } else {
+                    lp.width = (int) (mTextureView.getHeight() * ratio);
+                    lp.height = mTextureView.getHeight();
+                }
+                mTextureView.setLayoutParams(lp);
+                findViewById(R.id.live_camera_root_layout).requestLayout();
 
-                    mMatrix = mTextureView.getTransform(mMatrix);
-                    float scaleX = 1f, scaleY = 1f;
-                    scaleX = lp.width / ((float) oriPreviewSize.height);
-                    scaleY = lp.height / ((float) oriPreviewSize.width);
-                    mMatrix.setScale(scaleX, scaleY, oriPreviewSize.height / 2, oriPreviewSize.width / 2);
-                    mTextureView.setTransform(mMatrix);
+                mMatrix = mTextureView.getTransform(mMatrix);
+                float scaleX = 1f, scaleY = 1f;
+                scaleX = lp.width / ((float) oriPreviewSize.height);
+                scaleY = lp.height / ((float) oriPreviewSize.width);
+                mMatrix.setScale(scaleX, scaleY, oriPreviewSize.height / 2, oriPreviewSize.width / 2);
+                mTextureView.setTransform(mMatrix);
 
 //                    setTransformMatrix(size[1], size[0], lp.width, lp.height);
-                }
-            };
-            if (mTextureView.getWidth() <= 0) {
-                mTextureView.post(action);
-            } else {
-                action.run();
             }
+        };
+        if (mTextureView.getWidth() <= 0) {
+            mTextureView.post(action);
+        } else {
+            action.run();
         }
 
         try {
@@ -152,7 +157,34 @@ public class LiveCameraActivity extends Activity implements TextureView.SurfaceT
             mCamera.startPreview();
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException("mCamera.startPreview() error");
         }
+//        mCamera.setPreviewCallback(new Camera.PreviewCallback() {
+//            @Override
+//            public void onPreviewFrame(byte[] data, Camera camera) {
+//            }
+//        });
+        mCamera.setPreviewCallbackWithBuffer(new Camera.PreviewCallback() {
+            @Override
+            public void onPreviewFrame(byte[] data, Camera camera) {
+                int width = size[1];
+                int height = size[0];
+                YuvImage yuvImage = new YuvImage(data, ImageFormat.NV21, width, height, null);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                yuvImage.compressToJpeg(new Rect(0, 0, width, height), 80, byteArrayOutputStream);
+
+                byte[] yuvData = byteArrayOutputStream.toByteArray();
+
+//                BitmapFactory.Options options = new BitmapFactory.Options();
+//                options.inSampleSize = 2;
+                Bitmap detectBitmap = BitmapFactory.decodeByteArray(yuvData, 0, yuvData.length, null);
+
+                Log.d(TAG, "onPreviewFrame: " + detectBitmap);
+            }
+        });
+        int bufferSize = size[0] * size[1] * ImageFormat.getBitsPerPixel(ImageFormat.NV21);
+        byte[] data = new byte[bufferSize];
+        mCamera.addCallbackBuffer(data);
     }
 
     private int getCameraId() {
@@ -203,9 +235,6 @@ public class LiveCameraActivity extends Activity implements TextureView.SurfaceT
 
     private int[] updateCameraParametersSize(Camera camera, boolean front) {
         Camera.Parameters mParameters = camera.getParameters();
-        if (mParameters == null) {
-            return null;
-        }
         // Set a preview size that is closest to the viewfinder height and has the right aspect ratio.
         //Camera.Size[] optimalSizes = getOptimalSizes();
         //Camera.Size optimalPreviewSize = optimalSizes[0];
